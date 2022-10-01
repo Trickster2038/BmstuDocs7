@@ -1,0 +1,61 @@
+Дисплей - общий катод (без инверсии abcdefg входов) - до 30мА
+FYQ-5641AUG-21
+https://www.rct.ru/catalog/led-indicator/fyq-5641aug-21.html
+
+Драйер дисплея - вход до 20мА - выход 3.2 мА
+SN74LS48
+https://www.rhydolabz.com/documents/74LS48.pdf
+
+Зуммер - 2-8 В - до 20 мА
+KPI-G4214L
+https://www.chipdip.ru/product0/8008601455
+
+Драйвер UART-USB
+CH340G
+http://mypractic.ru/mikrosxema-ch340g-preobrazovatel-interfejsa-usb-v-uart-most-usb-uart-xarakteristiki-usloviya-ekspluatacii-tipovye-sxemy-vklyucheniya.html
+http://mypractic.ru/downloads/pdf/CH340G.pdf
+
+Микроконтроллер
+ATmega8535
+https://ww1.microchip.com/downloads/en/DeviceDoc/doc2502.pdf
+
+? Диоды 1N4007W ?
+
+Диоды защитные - 5В
+SA5A
+https://www.chipdip.ru/product/sa5.0
+
+Дешифратор 3-8
+74HC137 (D)
+https://static.chipdip.ru/lib/709/DOC011709143.pdf
+
+Дешифраторы 2-4 - выход 6.8 мА
+CD4555 (BMT)
+https://www.chipdip.ru/product0/8006849369
+
+Светодиодные полосы - от 10 до 30 мА
+L-865/4IDT
+https://www.chipdip.ru/product/l-865-4idt
+
+===================================================
+
+Резонатор для драйвера USB-UART 12МГц
+HC49S3
+https://www.chipdip.ru/product0/8010195131?from=suggest_product
+
+Конденсаторы для МК и драйвера USB-UART 22пФ
+GRM0335C1E220JA01D
+https://www.chipdip.ru/product/grm0335c1e220ja01d-murata
+
+Конденсатор для кнопки RESET - 100мкФ
+GRM31CR60J107M
+https://www.chipdip.ru/product/grm31cr60j107m
+
+Резистор для кнопки RESET - 10кОМ
+MO-200 (С2-23)
+https://www.chipdip.ru/product0/8009988897
+
+Резонатор для МК - 4 МГц
+SMDHC49S
+https://www.chipdip.ru/product0/8007032305
+
