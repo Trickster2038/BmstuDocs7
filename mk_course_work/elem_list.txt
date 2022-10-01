@@ -62,3 +62,7 @@ https://www.chipdip.ru/product0/8007032305
 Кнопки
 PB07-BR-1R0
 https://www.chipdip.ru/product0/8012125168
+
+Резисторы 1кОм
+MF-100 (С2-23)
+https://www.chipdip.ru/product0/8007154130
