@@ -66,3 +66,7 @@ https://www.chipdip.ru/product0/8012125168
 Резисторы 1кОм
 MF-100 (С2-23)
 https://www.chipdip.ru/product0/8007154130
+
+Конденсатор 10 мкФ
+КД-2
+https://www.chipdip.ru/product0/23255
