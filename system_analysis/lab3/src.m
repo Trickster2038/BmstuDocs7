@@ -7,9 +7,6 @@ function y = func(x)
   y = 2*sin(x);
 endfunction
 
-% func(2)
-% func(1:5:100)
-
 function f = systema(~, x)
   global C;
   f(1) = x(2);
@@ -27,9 +24,9 @@ endfunction
 % формирование необходимых временных рядов
 % границы отрезка
 a = 0;
-b = 5;
+b = 8;
 global C x1 x2 x3 x4;
-n = 500;
+n = 400;
 m = 20;
 % шаг интегрирования
 step = (b - a) / n;
