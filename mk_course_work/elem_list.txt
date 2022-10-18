@@ -6,7 +6,7 @@ https://www.rct.ru/catalog/led-indicator/fyq-5641aug-21.html
 SN74LS48
 https://www.rhydolabz.com/documents/74LS48.pdf
 
-Зуммер - 2-8 В - до 20 мА
+Зуммер - 2-8 В - до 20 мА (послабее HCM1001 https://www.chipdip.ru/product0/8008601455)
 KPI-G4214L
 https://www.chipdip.ru/product0/8008601455
 
