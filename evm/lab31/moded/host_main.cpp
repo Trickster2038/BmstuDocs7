@@ -19,6 +19,7 @@
 #include "gpc_handlers.h"
 
 #define BURST 256
+#define TESTSET_SIZE 10
 
 uint64_t orig_values[256];
 
@@ -65,7 +66,7 @@ int main(int argc, char** argv)
 
 	// /*
 	//  *
-	//  * Запись множества из BURST key-value и его последовательное чтение через Global Memory Buffer 
+	//  * Запись множества из BURST key-value 
 	//  *
 	//  */
 
@@ -94,7 +95,6 @@ int main(int argc, char** argv)
 		}
 	}
 
-	printf("point 0");
 
 	//Запуск обработчика insert_burst
 	__foreach_core(group, core) {
@@ -116,57 +116,21 @@ int main(int argc, char** argv)
 		lnh_inst.gpc[group][core]->mq_send(BURST);
 	}
 
-	printf("> point 1");
-
-	//Запуск обработчика для последовательного обхода множества ключей
-	/*
-	__foreach_core(group, core) {
-		lnh_inst.gpc[group][core]->start_async(__event__(search_burst));
-	}
-
-	//Получить количество ключей
-	unsigned int count[LNH_GROUPS_COUNT][LNH_MAX_CORES_IN_GROUP];
-
-	__foreach_core(group, core) {
-		count[group][core] = lnh_inst.gpc[group][core]->mq_receive();
-	}
-
-
-	//Прочитать количество ключей
-	__foreach_core(group, core) {
-		lnh_inst.gpc[group][core]->buf_read(count[group][core]*2*sizeof(uint64_t),(char*)gpc2host_buffer[group][core]);
-	}
-
-	//Ожидание завершения DMA
-	__foreach_core(group, core) {
-		lnh_inst.gpc[group][core]->buf_read_join();
-	}
-	*/
-
-
 	unsigned int value[LNH_GROUPS_COUNT][LNH_MAX_CORES_IN_GROUP];
 
 	bool error = false;
 	//Проверка целостности данных
 	__foreach_core(group, core) {
-		for (int i=0; i<BURST; i++) {
-			//uint64_t key = gpc2host_buffer[group][core][2*i];
-			//uint64_t value = gpc2host_buffer[group][core][2*i+1];
-			printf("> point 2");
-			lnh_inst.gpc[group][core]->start_async(__event__(search_burst));
-			printf("> before request");
-			lnh_inst.gpc[group][core]->mq_send(i);
-			printf("> before recieve");
-        		value[group][core] = lnh_inst.gpc[group][core]->mq_receive();
-			printf("> after recieve");
-			//uint64_t orig_value = orig_values[i];
-			//uint64_t orig_value =  host2gpc_buffer[group][core][2*key+1];
-			//uint64_t orig_key = host2gpc_buffer[group][core][2*value];
-			if (value[group][core] != orig_values[i]) {
+		for (int i=0; i<TESTSET_SIZE; i++) {
+			int key = rand64() % 256;
+			lnh_inst.gpc[group][core]->start_async(__event__(search_burst)); //Запустить обработчик
+			lnh_inst.gpc[group][core]->mq_send(key); // Запрос
+        		value[group][core] = lnh_inst.gpc[group][core]->mq_receive(); // Ответ
+			if (value[group][core] != orig_values[key]) {
 				error = true;
-				printf("[x] ip: 195.19.32.%d int: %d orig_int: %d \n", i, value[group][core], orig_values[i]);
+				printf("[x] ip: 195.19.32.%d int: %d orig_int: %d \n", key, value[group][core], orig_values[key]);
 			} else {
-				printf("[v] ip: 195.19.32.%d int: %d orig_int: %d \n", i, value[group][core], orig_values[i]);
+				printf("[v] ip: 195.19.32.%d int: %d orig_int: %d \n", key, value[group][core], orig_values[key]);
 			}
 		}
 	}
@@ -185,3 +149,4 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+

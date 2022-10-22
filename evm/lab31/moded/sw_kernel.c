@@ -1,12 +1,3 @@
-*
- * gpc_test.c
- *
- * sw_kernel library
- *
- *  Created on: April 23, 2021
- *      Author: A.Popov
- */
-
 #include <stdlib.h>
 #include <unistd.h>
 #include "lnh64.h"
@@ -80,33 +71,9 @@ void insert_burst() {
 
 
 //-------------------------------------------------------------
-//      Обход структуры lnh64 и запись в глобальную память 
+//      Обход структуры lnh64 и возврат по ключу
 //-------------------------------------------------------------
  
-void search_burst_legacy() {
-
-    //Ожидание завершения предыдущих команд
-    lnh_sync(); 
-    //Объявление переменных
-    unsigned int count = lnh_get_num(TEST_STRUCTURE);
-    unsigned int size_in_bytes = 2*count*sizeof(uint64_t);
-    //Создание буфера для приема пакета
-    uint64_t *buffer = (uint64_t*)malloc(size_in_bytes);
-    //Выборка минимального ключа
-    lnh_get_first(TEST_STRUCTURE);
-    //Запись ключа и значения в буфер
-    for (int i=0; i<count; i++) {
-        buffer[2*i] = lnh_core.result.key;
-        buffer[2*i+1] = lnh_core.result.value;
-        lnh_next(TEST_STRUCTURE,lnh_core.result.key);
-    }
-    //Запись глобальной памяти из RAM
-    buf_write(size_in_bytes, (char*)buffer);   
-    mq_send(count);
-    free(buffer);
-
-}
-
 void search_burst() {
 
     //Ожидание завершения предыдущих команд
@@ -114,29 +81,27 @@ void search_burst() {
     //Объявление переменных
     unsigned int count = lnh_get_num(TEST_STRUCTURE);
     unsigned int size_in_bytes = 2*count*sizeof(uint64_t);
-    //Создание буфера для приема пакета
-    //uint64_t *buffer = (uint64_t*)malloc(size_in_bytes);
+
     //Выборка минимального ключа
     lnh_get_first(TEST_STRUCTURE);
 
-    //Запись ключа и значения в буфер
+    //Получение ключа
     unsigned int key = mq_receive();
+
     char search_complete = 0;
     int i = 0;
+
     while ((i<count) && (search_complete == 0)) {
-	if(key == lnh_core.result.key){
-		search_complete = 1;
-		mq_send((unsigned int) lnh_core.result.value);
-	}
-        //buffer[2*i] = lnh_core.result.key;
-        //buffer[2*i+1] = lnh_core.result.value;
+	   if(key == lnh_core.result.key){
+		  search_complete = 1;
+		  mq_send((unsigned int) lnh_core.result.value);
+	   }
         lnh_next(TEST_STRUCTURE,lnh_core.result.key);
     }
-    //Запись глобальной памяти из RAM
-    //buf_write(size_in_bytes, (char*)buffer); 
+
+    // Если элемент не найден
     if(search_complete == 0){
-	mq_send(404);
+	   mq_send(404);
     }
-    //free(buffer);
 
 }
