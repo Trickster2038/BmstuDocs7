@@ -37,7 +37,7 @@ int main(void) {
             /////////////////////////////////////////////
             case __event__(insert_burst) : insert_burst(); break;
             case __event__(search_burst) : search_burst(); break;
-	    //case __event__(search_interface) : search_interface(); break;
+        //case __event__(search_interface) : search_interface(); break;
         }
         //Disable RW operations
         set_gpc_state(IDLE);
@@ -91,17 +91,27 @@ void search_burst() {
     char search_complete = 0;
     int i = 0;
 
+    /*
     while ((i<count) && (search_complete == 0)) {
-	   if(key == lnh_core.result.key){
-		  search_complete = 1;
-		  mq_send((unsigned int) lnh_core.result.value);
-	   }
+       if(key == lnh_core.result.key){
+          search_complete = 1;
+          mq_send((unsigned int) lnh_core.result.value);
+       }
         lnh_next(TEST_STRUCTURE,lnh_core.result.key);
     }
 
     // Если элемент не найден
     if(search_complete == 0){
-	   mq_send(404);
+       mq_send(404);
     }
+    */
+
+   if(lnh_search(TEST_STRUCTURE, key)){
+        mq_send((unsigned int) lnh_core.result.value);
+   } else {
+        mq_send(404);
+   }
+
 
 }
+
