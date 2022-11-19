@@ -193,7 +193,7 @@ int main(int argc, char** argv)
 
 #endif
 
-// ===== < CUSTOM PART > =====
+// ===== < /CUSTOM PART > =====
 
 	/*
 	 *
@@ -671,4 +671,3 @@ int main(int argc, char** argv)
 
 	return 0;
 }
-
