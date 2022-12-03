@@ -4,7 +4,7 @@ close all;
 
 1;
 function y = func(x)
-  y = 3*(sin(x) + 4.*cos(x)) + sin(x+5);;
+  y = 2*sin(x)+x.**3;
 endfunction
 
 function f = systema(~, x)
