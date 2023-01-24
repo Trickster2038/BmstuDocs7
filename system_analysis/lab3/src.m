@@ -4,7 +4,7 @@ close all;
 
 1;
 function y = func(x)
-  y = 2*sin(x);
+  y = 2*sin(x/2);
 endfunction
 
 function f = systema(~, x)
